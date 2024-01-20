@@ -1,19 +1,13 @@
 using UnityEngine;
+using static MiniGameEnums;
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] Colors color;
+    [SerializeField] private Colors _color;
 
     public Colors Color 
     {
-        get => color; 
-        private set => color = value;
+        get => _color; 
+        private set => _color = value;
     } 
-
-    public enum Colors
-    {
-        White,
-        Green,
-        Red
-    }
 }

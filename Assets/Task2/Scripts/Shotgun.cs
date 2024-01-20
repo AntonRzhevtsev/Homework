@@ -1,32 +1,32 @@
 using UnityEngine;
 
-public class Shotgun : IGun
+public class Shotgun : IGun, IReloadable
 {
-    IShooter _shooter;
-    GameObject _bullet;
-    int _maxRounds;
-    int currentRounds;
-    float _bulletSpread;
+    private Shooter _shooter;
+    private GameObject _bullet;
+    private int _maxRounds;
+    private int _currentRounds;
+    private float _bulletSpread;
 
-    public Shotgun(IShooter shooter, int maxRounds, GameObject bullet, float bulletSpread)
+    public Shotgun(Shooter shooter, int maxRounds, GameObject bullet, float bulletSpread)
     {
         _shooter = shooter;
         _maxRounds = maxRounds;
         _bullet = bullet;
         _bulletSpread = bulletSpread;
-        currentRounds = _maxRounds;
+        _currentRounds = _maxRounds;
         PrintRounds();
     }
 
     public void Reload()
     {
-        currentRounds = _maxRounds;
+        _currentRounds = _maxRounds;
         PrintRounds();
     }
 
     public void Shoot()
     {
-        if(currentRounds == 0)
+        if(_currentRounds == 0)
         {
             Debug.Log("*Click*");
             return;
@@ -38,9 +38,9 @@ public class Shotgun : IGun
             GameObject.Instantiate(_bullet, _shooter.Transform.position, 
                 Quaternion.Euler(defaultRotation.x, defaultRotation.y + i * _bulletSpread, defaultRotation.z));
 
-        currentRounds--;
+        _currentRounds--;
         PrintRounds();
     }
 
-    void PrintRounds() => Debug.Log($"Magazine: {currentRounds} rounds");
+    private void PrintRounds() => Debug.Log($"Magazine: {_currentRounds} rounds");
 }

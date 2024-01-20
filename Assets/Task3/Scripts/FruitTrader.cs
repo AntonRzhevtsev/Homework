@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class FruitTrader : Trader
 {
-    [SerializeField] int fruitCost;
+    [SerializeField] private int _fruitCost;
+
     protected override void Sell()
     {
-        if(_player.money - fruitCost < 0)
+        if(_player.Money - _fruitCost < 0)
         {
             SayNotEnoughMoney();
             return;
         }
 
-        _player.fruits += 1;
-        _player.money -= fruitCost;
-
-        CallSellEvent();
+        _player.TakeFruits(1);
+        _player.Pay(_fruitCost);
+        _player.PrintInventory();
     }
 }

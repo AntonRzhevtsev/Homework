@@ -2,18 +2,17 @@ using UnityEngine;
 
 public class ArmorTrader : Trader
 {
-    [SerializeField] int armorCost;
+    [SerializeField] private int _armorCost;
     protected override void Sell()
     {
-        if(_player.money - armorCost < 0)
+        if(_player.Money - _armorCost < 0)
         {
             SayNotEnoughMoney();
             return;
         }
 
-        _player.armor += 1;
-        _player.money -= armorCost;
-
-        CallSellEvent();
+        _player.TakeArmor(1);
+        _player.Pay(_armorCost);
+        _player.PrintInventory();
     }
 }

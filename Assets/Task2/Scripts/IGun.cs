@@ -1,6 +1,4 @@
 public interface IGun
 {
-    void Reload();
-
-    void Shoot();
+    public void Shoot();
 }

@@ -4,28 +4,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] MouseClickHandler mouseClickHandler;
-    IWinCondition _winCondition;
-    List<Ball> balls;
+    [SerializeField] private MouseClickHandler _mouseClickHandler;
+    private IWinCondition _winCondition;
+    private List<Ball> _balls;
 
-    void Start()
+    private void Start()
     {
-        balls = FindObjectsByType<Ball>(FindObjectsSortMode.None).ToList();
-        mouseClickHandler.ballDestroyed += CheckGameStatus;
+        _balls = FindObjectsByType<Ball>(FindObjectsSortMode.None).ToList();
+        _mouseClickHandler.BallDestroyed += CheckGameStatus;
     }
     
     public void SetWinCondition(IWinCondition winCondition) => _winCondition = winCondition;
 
-    void CheckGameStatus(Ball ball)
+    private void CheckGameStatus(Ball ball)
     {
-        balls.Remove(ball);
-        if(_winCondition.CheckEndGame(balls))
+        _balls.Remove(ball);
+        if(_winCondition.CheckEndGame(_balls))
         {
             PrintGameOver();
-            mouseClickHandler.enabled = false;
+            _mouseClickHandler.BallDestroyed -= CheckGameStatus;
+            _mouseClickHandler.enabled = false;
         }
     }
 
-    void PrintGameOver() => Debug.Log("GAME OVER\nYou win!");
+    private void PrintGameOver() => Debug.Log("GAME OVER\nYou win!");
 
 }

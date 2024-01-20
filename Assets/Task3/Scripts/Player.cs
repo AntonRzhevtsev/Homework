@@ -2,25 +2,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] public int money;
-    [SerializeField] public int armor;
-    [SerializeField] public int fruits;
-    Trader trader;
+    public int Money => _money;
+    [SerializeField] private int _money;
+    [SerializeField] private int _armor;
+    [SerializeField] private int _fruits;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.TryGetComponent(out trader))
-            trader.soldItem += PrintInventory;
-    }
+    public void Pay(int price) => _money -= price;
 
-    void OnTriggerExit(Collider other)
-    {
-        if(other.TryGetComponent(out trader))
-        {
-            trader.soldItem -= PrintInventory;
-            trader = null;
-        }
-    }
-    void PrintInventory() => Debug.Log($"{name} has {money} money, {armor} armor and {fruits} fruits.");
+    public void TakeFruits(int fruits) => _fruits += fruits;
+
+    public void TakeArmor(int armor) => _armor += armor;
+
+    public void PrintInventory() => Debug.Log($"{name} has {_money} money, {_armor} armor and {_fruits} fruits.");
 
 }

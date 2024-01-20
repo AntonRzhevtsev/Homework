@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using static MiniGameEnums;
 
 public class DestroyBallsByColor : IWinCondition
 {
-    Ball.Colors _targetColor;
+    private Colors _targetColor;
 
-    public DestroyBallsByColor(Ball.Colors targetColor)
+    public DestroyBallsByColor(Colors targetColor)
     {
         _targetColor = targetColor;
     }

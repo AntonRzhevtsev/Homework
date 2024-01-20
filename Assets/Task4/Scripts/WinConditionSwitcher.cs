@@ -1,29 +1,21 @@
 using UnityEngine;
+using static MiniGameEnums;
 
 public class WinConditionSwitcher : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
-    [SerializeField] WinConditions winCondition;
-    // Это поле должно быть с атрибутом HideInInspector, а в методе OnValide() становиться доступным, 
-    // если winCondition == WinConditions.DestroyBallsByColor
-    // Но я не разобрался как это сделать
-    [SerializeField] Ball.Colors ballColor;
-    
-    enum WinConditions
-    {
-        DestroyAllBalls,
-        DestroyBallsByColor
-    }
+    [SerializeField] private GameManager _gameManager;
+    [SerializeField] private WinConditions _winCondition;
+    [SerializeField] private Colors _ballColor;
 
-    void Start()
+    private void Start()
     {
-        switch(winCondition)
+        switch(_winCondition)
         {
             case WinConditions.DestroyAllBalls:
-                gameManager.SetWinCondition(new DestroyAllBalls());
+                _gameManager.SetWinCondition(new DestroyAllBalls());
                 break;
             case WinConditions.DestroyBallsByColor:
-                gameManager.SetWinCondition(new DestroyBallsByColor(ballColor));
+                _gameManager.SetWinCondition(new DestroyBallsByColor(_ballColor));
                 break;
         }
     }

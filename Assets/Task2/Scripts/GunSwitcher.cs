@@ -2,26 +2,26 @@ using UnityEngine;
 
 public class GunSwitcher : MonoBehaviour
 {
-    [SerializeField] GameObject bullet;
-    [SerializeField] Soldier soldier;
+    [SerializeField] private GameObject _bullet;
+    [SerializeField] private Shooter _shooter;
 
-    void Update()
+    private void Update()
     {
         if(Input.GetKey(KeyCode.Alpha1))
         {
-            soldier.EquipGun(new Blaster(soldier, bullet));
+            _shooter.EquipGun(new Blaster(_shooter, _bullet));
             Debug.Log("You equiped blaster");
         }
 
         if(Input.GetKey(KeyCode.Alpha2))
         {
-            soldier.EquipGun(new Rifle(soldier, 30, bullet));
+            _shooter.EquipGun(new Rifle(_shooter, 30, _bullet));
             Debug.Log("You equiped rifle");
         }
 
         if(Input.GetKey(KeyCode.Alpha3))
         {
-            soldier.EquipGun(new Shotgun(soldier, 8, bullet, 30f));
+            _shooter.EquipGun(new Shotgun(_shooter, 8, _bullet, 30f));
             Debug.Log("You equiped shotgun");
         }
     }

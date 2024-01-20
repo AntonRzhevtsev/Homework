@@ -1,39 +1,45 @@
 using UnityEngine;
 
-public class Rifle : IGun
+public class Rifle : IGun, IReloadable
 {
-    IShooter _shooter;
-    int currentRounds;
-    int _maxRounds;
-    GameObject _bullet;
+    private Shooter _shooter;
+    private int _currentRounds;
+    private int _maxRounds;
+    private GameObject _bullet;
+    private bool _ableToShoot;
 
-    public Rifle(IShooter shooter, int maxRounds, GameObject bullet)
+    public Rifle(Shooter shooter, int maxRounds, GameObject bullet)
     {
         _shooter = shooter;
         _maxRounds = maxRounds;
         _bullet = bullet;
-        currentRounds = _maxRounds;
+        _currentRounds = _maxRounds;
+        _ableToShoot = true;
         PrintRounds();
     }
 
     public void Reload()
     {
-        currentRounds = _maxRounds;
+        _currentRounds = _maxRounds;
         PrintRounds();
+        _ableToShoot = true;
     }
 
     public void Shoot()
     {
-        if(currentRounds == 0)
+        if(_ableToShoot)
         {
-            Debug.Log("*Click*");
-            return;
+            GameObject.Instantiate(_bullet, _shooter.Transform.position, _shooter.Transform.rotation);
+            _currentRounds--;
+            PrintRounds();
+            
+            if(_currentRounds == 0)
+                _ableToShoot = false;
         }
-
-        GameObject.Instantiate(_bullet, _shooter.Transform.position, _shooter.Transform.rotation);
-        currentRounds--;
-        PrintRounds();
+        else
+            Debug.Log("Click");
+        
     }
 
-    void PrintRounds() => Debug.Log($"Magazine: {currentRounds} rounds");
+    private void PrintRounds() => Debug.Log($"Magazine: {_currentRounds} rounds");
 }
