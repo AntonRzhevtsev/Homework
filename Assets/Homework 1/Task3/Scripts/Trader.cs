@@ -3,7 +3,6 @@ using UnityEngine;
 
 public abstract class Trader : MonoBehaviour
 {
-    public event Action SoldItem;
     protected Player _player;
     private bool isSelling = false;
 
